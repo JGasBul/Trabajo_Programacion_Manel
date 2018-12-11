@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity implements Titulaciones.OnFr
     ArrayList<CicleFlorida> inf_array;
     ArrayList<CicleFlorida> empresa_array;
     FragmentManager fm;
-    FragmentTransaction ft1;
     Fragment tit;
     Fragment ciclo;
     int id;
@@ -26,14 +25,15 @@ public class MainActivity extends AppCompatActivity implements Titulaciones.OnFr
         setContentView(R.layout.activity_main);
         creaDades();
         fm = getFragmentManager();
-        ft1=fm.beginTransaction();
         tit = fm.findFragmentById(R.id.titulaciones);
-        ciclo=Ciclos.newInstance();
+
     }
 
     @Override
     public void empresaListener() {
-        id=0;
+        int temp=-1;
+        Boolean mitja=false;
+        Boolean sup=false;
         Iterator it=llistat_titulacions.iterator();
         empresa_array=new ArrayList<CicleFlorida>();
         while (it.hasNext()){
@@ -42,32 +42,101 @@ public class MainActivity extends AppCompatActivity implements Titulaciones.OnFr
                 empresa_array.add(c);
             }
         }
+        Iterator it2=empresa_array.iterator();
+        while (it2.hasNext()) {
+            CicleFlorida c = (CicleFlorida) it2.next();
+            if (c.getTipus().equalsIgnoreCase("Mitjà")) {
+                mitja = true;
+            }
+            if (c.getTipus().equalsIgnoreCase("Superior")) {
+                sup = true;
+            }
+        }
+        if (mitja==true && sup==true){
+            temp=2;
+        }else if (sup==true){
+            temp=1;
+        }else {
+            temp=0;
+        }
+        ciclo=Ciclos.newInstance(empresa_array,temp);
+        FragmentTransaction ft =fm.beginTransaction();
+        ft.replace(R.id.tipos_ciclo,ciclo);
+        ft.commit();
     }
 
     @Override
     public void infListener() {
+        int temp=-1;
+        Boolean mitja=false;
+        Boolean sup=false;
         id=1;
         Iterator it=llistat_titulacions.iterator();
         inf_array=new ArrayList<CicleFlorida>();
         while (it.hasNext()){
             CicleFlorida c= (CicleFlorida) it.next();
-            if (c.getFamiliaProfessional().equalsIgnoreCase("ESPORT")){
+            if (c.getFamiliaProfessional().equalsIgnoreCase("INFORMÀTICA")){
                 inf_array.add(c);
             }
         }
+        Iterator it2=inf_array.iterator();
+        while (it2.hasNext()) {
+            CicleFlorida c = (CicleFlorida) it2.next();
+            if (c.getTipus().equalsIgnoreCase("Mitjà")) {
+                mitja = true;
+            }
+            if (c.getTipus().equalsIgnoreCase("Superior")) {
+                sup = true;
+            }
+        }
+        if (mitja==true && sup==true){
+            temp=2;
+        }else if (sup==true){
+            temp=1;
+        }else {
+            temp=0;
+        }
+        ciclo=Ciclos.newInstance(inf_array,temp);
+        FragmentTransaction ft =fm.beginTransaction();
+        ft.replace(R.id.tipos_ciclo,ciclo);
+        ft.commit();
     }
 
     @Override
     public void esportsListener() {
+        int temp=-1;
+        Boolean mitja=false;
+        Boolean sup=false;
         id=2;
         Iterator it=llistat_titulacions.iterator();
         esports_array=new ArrayList<CicleFlorida>();
         while (it.hasNext()){
             CicleFlorida c= (CicleFlorida) it.next();
-            if (c.getFamiliaProfessional().equalsIgnoreCase("INFORMÀTICA")){
+            if (c.getFamiliaProfessional().equalsIgnoreCase("ESPORT")){
                 esports_array.add(c);
             }
         }
+        Iterator it2=esports_array.iterator();
+        while (it2.hasNext()) {
+            CicleFlorida c = (CicleFlorida) it2.next();
+            if (c.getTipus().equalsIgnoreCase("Mitjà")) {
+                mitja = true;
+            }
+            if (c.getTipus().equalsIgnoreCase("Superior")) {
+                sup = true;
+            }
+        }
+        if (mitja==true && sup==true){
+            temp=2;
+        }else if (sup==true){
+            temp=1;
+        }else {
+            temp=0;
+        }
+        ciclo=Ciclos.newInstance(esports_array,temp);
+        FragmentTransaction ft =fm.beginTransaction();
+        ft.replace(R.id.tipos_ciclo,ciclo);
+        ft.commit();
     }
     @Override
     public void mitjaListener() {

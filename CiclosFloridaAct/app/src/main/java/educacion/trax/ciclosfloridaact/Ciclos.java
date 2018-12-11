@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,16 +26,19 @@ public class Ciclos extends Fragment implements View.OnClickListener{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     // TODO: Rename and change types of parameters
     private OnFragmentInteractionListener mListener;
+    private ArrayList<CicleFlorida> listado;
+    private int ciclo;
 
     public Ciclos() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static Ciclos newInstance() {
+    public static Ciclos newInstance(ArrayList array,int x) {
         Ciclos fragment = new Ciclos();
         Bundle args = new Bundle();
-
+        args.putInt("ciclo",x);
+        args.putParcelableArrayList("listado",array);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,7 +47,8 @@ public class Ciclos extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            listado = getArguments().getParcelableArrayList("listado");
+            ciclo = getArguments().getInt("ciclo");
         }
     }
 
@@ -56,6 +61,11 @@ public class Ciclos extends Fragment implements View.OnClickListener{
         mitja.setOnClickListener(this);
         final Button sup=v.findViewById(R.id.sup);
         sup.setOnClickListener(this);
+        if (ciclo==0){
+            sup.setVisibility(View.INVISIBLE);
+        }else if (ciclo==1){
+            mitja.setVisibility(View.INVISIBLE);
+        }
         return v;
     }
 
