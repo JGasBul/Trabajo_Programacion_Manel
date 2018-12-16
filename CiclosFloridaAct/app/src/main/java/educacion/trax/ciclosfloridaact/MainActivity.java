@@ -5,12 +5,11 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.CellIdentityLte;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MainActivity extends AppCompatActivity implements Titulaciones.OnFragmentInteractionListener,Ciclos.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements Titulaciones.OnFragmentInteractionListener,Ciclos.OnFragmentInteractionListener,Descripcion.OnFragmentInteractionListener{
     ArrayList<CicleFlorida> llistat_titulacions;
     ArrayList<CicleFlorida> esports_array;
     ArrayList<CicleFlorida> inf_array;
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements Titulaciones.OnFr
     FragmentManager fm;
     Fragment tit;
     Fragment ciclo;
-    int id;
+    Fragment descripcion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements Titulaciones.OnFr
         int temp=-1;
         Boolean mitja=false;
         Boolean sup=false;
-        id=1;
         Iterator it=llistat_titulacions.iterator();
         inf_array=new ArrayList<CicleFlorida>();
         while (it.hasNext()){
@@ -102,12 +100,12 @@ public class MainActivity extends AppCompatActivity implements Titulaciones.OnFr
         ft.commit();
     }
 
+
     @Override
     public void esportsListener() {
         int temp=-1;
         Boolean mitja=false;
         Boolean sup=false;
-        id=2;
         Iterator it=llistat_titulacions.iterator();
         esports_array=new ArrayList<CicleFlorida>();
         while (it.hasNext()){
@@ -138,15 +136,6 @@ public class MainActivity extends AppCompatActivity implements Titulaciones.OnFr
         ft.replace(R.id.tipos_ciclo,ciclo);
         ft.commit();
     }
-    @Override
-    public void mitjaListener() {
-
-    }
-
-    @Override
-    public void supListener() {
-
-    }
 
     public void creaDades(){
         CicleFlorida c;
@@ -167,10 +156,25 @@ public class MainActivity extends AppCompatActivity implements Titulaciones.OnFr
         llistat_titulacions.add(c);
         c = new CicleFlorida("INFORMÀTICA","Superior","Desarrollo de Aplicaciones Multiplataforma","Este NUEVO Ciclo Formativo de Grado Superior concertado te forma como profesional de la informática y las comunicaciones, especializado en el desarrollo, implantación y mantenimiento de aplicaciones para diferentes plataformas tecnológicas.");
         llistat_titulacions.add(c);
-        c = new CicleFlorida("INFORMÀTICA","Superior","Desarrollo de Aplicaciones Web","ste NUEVO Ciclo Formativo de Grado Superior privado te forma como profesional de la informática y las comunicaciones, especializado en el desarrollo, implantación y mantenimiento de aplicaciones web");
+        c = new CicleFlorida("INFORMÀTICA","Superior","Desarrollo de Aplicaciones Web","Este NUEVO Ciclo Formativo de Grado Superior privado te forma como profesional de la informática y las comunicaciones, especializado en el desarrollo, implantación y mantenimiento de aplicaciones web");
         llistat_titulacions.add(c);
     }
 
 
+    @Override
+    public void mitjaListener(ArrayList x) {
+        descripcion=Descripcion.newInstance(x);
+        FragmentTransaction ft=fm.beginTransaction();
+        ft.replace(R.id.listado,descripcion);
+        ft.commit();
+    }
+
+    @Override
+    public void supListener(ArrayList x) {
+        descripcion=Descripcion.newInstance(x);
+        FragmentTransaction ft=fm.beginTransaction();
+        ft.replace(R.id.listado,descripcion);
+        ft.commit();
+    }
 }
 

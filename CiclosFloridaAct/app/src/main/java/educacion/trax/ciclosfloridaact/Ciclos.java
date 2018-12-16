@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**
@@ -27,6 +28,8 @@ public class Ciclos extends Fragment implements View.OnClickListener{
     // TODO: Rename and change types of parameters
     private OnFragmentInteractionListener mListener;
     private ArrayList<CicleFlorida> listado;
+    private ArrayList<CicleFlorida> mitja_array;
+    private ArrayList<CicleFlorida> sup_array;
     private int ciclo;
 
     public Ciclos() {
@@ -89,12 +92,35 @@ public class Ciclos extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (v.getId()==R.id.mitja){
-            mListener.mitjaListener();
+            mListener.mitjaListener(filtraciclos(0));
         }
         if (v.getId()==R.id.sup){
-            mListener.supListener();
+            mListener.supListener(filtraciclos(1));
         }
 
+    }
+    public ArrayList filtraciclos(int x){
+       if (x==0){
+           mitja_array=new ArrayList<CicleFlorida>();
+           Iterator it=listado.iterator();
+           while (it.hasNext()){
+               CicleFlorida cl= (CicleFlorida) it.next();
+               if (cl.getTipus().equalsIgnoreCase("Mitjà")) {
+                  mitja_array.add(cl);
+               }
+           }
+           return mitja_array;
+       }else {
+           sup_array=new ArrayList<CicleFlorida>();
+           Iterator it=listado.iterator();
+           while (it.hasNext()){
+               CicleFlorida cl= (CicleFlorida) it.next();
+               if (cl.getTipus().equalsIgnoreCase("Superior")) {
+                   sup_array.add(cl);
+               }
+           }
+           return sup_array;
+       }
     }
 
     /**
@@ -109,7 +135,7 @@ public class Ciclos extends Fragment implements View.OnClickListener{
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void mitjaListener();
-        void supListener();
+        void mitjaListener(ArrayList x);
+        void supListener(ArrayList x);
     }
 }
